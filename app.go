@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	httpserver.Start()
 	log.Println("Server started")
+	go httpserver.Start()
 }

@@ -32,7 +32,7 @@ func Setup() {
 func Listen() {
 	srv := &http.Server{
         Handler:      router,
-        Addr:         "0.0.0.0:8080",
+        Addr:         "0.0.0.0",
         WriteTimeout: 15 * time.Second,
         ReadTimeout:  15 * time.Second,
     }

@@ -8,5 +8,5 @@ import (
 
 func main() {
 	log.Println("Server started")
-	go httpserver.Start()
+	httpserver.Start()
 }

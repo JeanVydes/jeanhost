@@ -49,5 +49,6 @@ func Start() {
         ReadTimeout:  15 * time.Second,
     }
 
+	log.Default().Fatalf("%s", "Server Started")
     log.Fatal(srv.ListenAndServe())
 }

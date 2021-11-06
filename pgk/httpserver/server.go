@@ -1,7 +1,6 @@
 package httpserver
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 	"time"
@@ -18,33 +17,22 @@ var (
 type Map map[string]interface{}
 
 func Start() {
+	Setup()
+	Listen()
+}
+
+func Setup() {
 	router = mux.NewRouter()
 	api = router.PathPrefix("/api").Subrouter()
 	v1 = api.PathPrefix("/v1").Subrouter()
 
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hi darling"))
-	})
+	setHandlers()
+}
 
-	api.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("working."))
-	})
-
-	v1.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		bytes, err := json.Marshal(Map{"message": "working."})
-
-		if err != nil {
-			w.Write([]byte("error."))
-			return
-		}
-
-		w.Write(bytes)
-	})
-
+func Listen() {
 	srv := &http.Server{
         Handler:      router,
         Addr:         "127.0.0.1:8000",
-        // Good practice: enforce timeouts for servers you create!
         WriteTimeout: 15 * time.Second,
         ReadTimeout:  15 * time.Second,
     }
